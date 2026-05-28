@@ -1,0 +1,195 @@
+Kubernetes Setup Journey — What You Did Until Now
+1. Installed kubectl
+You downloaded and configured kubectl.
+
+Purpose
+kubectl is the command-line tool used to interact with Kubernetes clusters.
+
+Role
+
+kubectl → API Server → Kubernetes Cluster
+Using kubectl you can:
+
+create deployments
+
+manage pods
+
+check logs
+
+scale applications
+
+troubleshoot clusters
+
+2. Verified kubectl Installation
+You ran:
+
+Bash
+
+kubectl version --client
+Output confirmed:
+
+kubectl installed successfully
+
+client version available
+
+3. Faced Connection Refused Error
+You tried:
+
+Bash
+
+kubectl create deployment nginx --image=nginx
+Error:
+
+
+connection refused
+Why?
+Because:
+
+kubectl was installed
+
+but Kubernetes cluster was NOT running
+
+So kubectl could not connect to:
+
+
+localhost:8080
+4. Installed Minikube
+Minikube creates a local Kubernetes cluster on your laptop.
+
+What Minikube Provides
+It automatically creates:
+
+API Server
+
+Scheduler
+
+Controller Manager
+
+etcd
+
+Kubelet
+
+Container Runtime
+
+Basically a complete Kubernetes environment.
+
+5. Started Kubernetes Cluster
+You ran:
+
+Bash
+
+minikube start
+Result
+Kubernetes control plane started successfully.
+
+6. Verified Cluster
+You checked:
+
+Bash
+
+kubectl get nodes
+Output:
+
+
+minikube   Ready   control-plane
+Meaning:
+
+cluster healthy
+
+node active
+
+kubectl connected successfully
+
+7. Created First Deployment
+You ran:
+
+Bash
+
+kubectl create deployment nginx --image=nginx
+This deployed:
+
+NGINX container
+
+inside a Pod
+
+managed by Kubernetes
+
+8. Kubernetes Automatically Created Objects
+When you created deployment:
+
+
+Deployment
+   ↓
+ReplicaSet
+   ↓
+Pod
+   ↓
+Container
+Kubernetes internally created:
+
+Deployment
+
+ReplicaSet
+
+Pod
+
+NGINX container
+
+9. Verified Everything
+You ran:
+
+Bash
+
+kubectl get all
+You saw:
+
+Pod
+
+Deployment
+
+ReplicaSet
+
+Service
+
+10. Your Pod Became Running
+Output:
+
+
+STATUS: Running
+Meaning:
+
+image pulled successfully
+
+container started
+
+application healthy
+
+What You Learned Technically
+Core Kubernetes Concepts Covered
+kubectl
+
+cluster
+
+node
+
+pod
+
+deployment
+
+replicaset
+
+container orchestration
+
+API server communication
+
+Real-Time Industry Flow
+
+Developer pushes code
+        ↓
+Docker image built
+        ↓
+Kubernetes Deployment created
+        ↓
+Pods scheduled on Nodes
+        ↓
+Application becomes available
