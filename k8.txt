@@ -1,0 +1,370 @@
+1. The Limitations of Docker Containers
+Main Idea
+Docker solved application packaging problems but not large-scale orchestration problems.
+
+Problems with Docker Alone
+No auto-healing
+
+No auto-scaling
+
+Manual container management
+
+Networking complexity
+
+Load balancing difficult
+
+Rolling updates hard
+
+Multi-host management difficult
+
+Real-Time Example
+Imagine:
+
+100 containers running
+
+One crashes at 2 AM
+
+Docker alone won’t restart automatically across servers
+
+This is where Kubernetes helps.
+
+2. History of Containers
+Explain this timeline in demos/interviews:
+
+Era	Technology
+Traditional Deployment	Apps directly on servers
+Virtual Machines	VMware, Hyper-V
+Containers	Docker
+Orchestration	Kubernetes
+
+Important Point
+Containers are lightweight compared to VMs.
+
+3. Why Kubernetes Became Essential
+Core Purpose
+Kubernetes automates:
+
+deployment,
+
+scaling,
+
+networking,
+
+recovery,
+
+container orchestration.
+
+One-Line Interview Answer
+“Kubernetes is a container orchestration platform used to automate deployment, scaling, load balancing, and management of containerized applications.”
+
+4. Kubernetes Introduction
+What Kubernetes Does
+Manages containers
+
+Keeps apps running
+
+Scales automatically
+
+Handles failures
+
+Performs rolling updates
+
+Developed By
+Google
+
+Later maintained by:
+Cloud Native Computing Foundation
+
+5. Kubernetes Architecture
+This is VERY IMPORTANT for interviews.
+
+Master Node / Control Plane
+Components
+Component	Purpose
+API Server	Entry point
+etcd	Database
+Scheduler	Assigns pods
+Controller Manager	Maintains desired state
+
+Worker Node Components
+Component	Purpose
+Kubelet	Talks to master
+Container Runtime	Runs containers
+Kube Proxy	Networking
+
+Important Interview Line
+“Kubernetes follows desired state management. If the actual state differs from desired state, Kubernetes automatically corrects it.”
+
+6. Installation Approaches
+They are teaching:
+
+Kubectl
+
+Minikube
+
+Kind
+
+Good for local learning.
+
+7. Kubectl
+What is kubectl?
+CLI tool to interact with Kubernetes cluster.
+
+Common Commands
+Bash
+
+kubectl get pods
+kubectl get nodes
+kubectl describe pod pod-name
+kubectl logs pod-name
+kubectl delete pod pod-name
+8. Minikube
+What is Minikube?
+Single-node Kubernetes cluster for local development.
+
+Used For
+Learning
+
+Practice
+
+Testing
+
+9. Kind
+Full Form
+Kubernetes IN Docker
+
+Purpose
+Runs Kubernetes clusters inside Docker containers.
+
+Mostly used for:
+
+CI/CD
+
+Testing
+
+Lightweight local clusters
+
+10. Pod in Kubernetes
+VERY IMPORTANT TOPIC.
+
+What is Pod?
+Smallest deployable unit in Kubernetes.
+
+A pod contains:
+
+one or more containers
+
+shared networking
+
+shared storage
+
+Real-Time Example
+
+Pod
+ └── Nginx Container
+OR
+
+
+Pod
+ ├── App Container
+ └── Logging Sidecar Container
+Important Interview Point
+“A pod gets its own IP address.”
+
+11. Creating First Pod
+Basic YAML:
+
+YAML
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+Commands
+Bash
+
+kubectl apply -f pod.yml
+kubectl get pods
+12. ReplicaSets
+Purpose
+Maintains desired number of pod replicas.
+
+Example
+If desired replicas = 3:
+
+One pod crashes
+
+ReplicaSet automatically creates another
+
+This is called:
+
+Self-Healing
+13. Deployments
+Most important real-world object.
+
+Deployment Handles
+ReplicaSets
+
+Rolling updates
+
+Rollbacks
+
+Scaling
+
+Rolling Update Example
+Old Version:
+
+
+v1
+New Version:
+
+
+v2
+Kubernetes updates gradually without downtime.
+
+Rollback Command
+Bash
+
+kubectl rollout undo deployment app-name
+14. Horizontal Pod Autoscaler (HPA)
+Purpose
+Automatically scale pods based on:
+
+CPU
+
+Memory
+
+Metrics
+
+Real-Time Example
+Traffic increases:
+
+Pods increase from 2 → 10
+
+Traffic decreases:
+
+Pods reduce automatically
+
+15. Readiness Probe
+Purpose
+Checks whether pod is ready to receive traffic.
+
+If not ready:
+
+Kubernetes stops sending traffic.
+
+16. Liveness Probe
+Purpose
+Checks whether application is alive.
+
+If failed:
+
+Kubernetes restarts container.
+
+Difference
+Probe	Purpose
+Readiness	Ready for traffic?
+Liveness	Application alive?
+
+17. Kubernetes Services
+Pods are temporary.
+
+Service provides:
+
+stable networking
+
+fixed access point
+
+Types of Services
+Type	Usage
+ClusterIP	Internal communication
+NodePort	External access via port
+LoadBalancer	Cloud external access
+
+18. ClusterIP
+Default service type.
+
+Used for:
+
+internal pod communication
+
+19. NodePort
+Exposes application externally.
+
+Example:
+
+
+NodeIP:30007
+20. LoadBalancer
+Used in cloud environments like:
+
+Amazon Web Services
+
+Microsoft Azure
+
+Google Cloud
+
+Creates external load balancer automatically.
+
+21. Book Review App Deployment
+This is where all concepts combine.
+
+Typical flow:
+
+Create deployment
+
+Create service
+
+Expose app
+
+Scale app
+
+Update image
+
+Observe rollout
+
+MOST IMPORTANT TOPICS FOR INTERVIEWS
+Focus deeply on these:
+
+MUST KNOW
+Architecture
+
+Pods
+
+Deployments
+
+ReplicaSets
+
+Services
+
+HPA
+
+Readiness vs Liveness
+
+Rolling Updates
+
+kubectl commands
+
+VERY IMPORTANT COMMANDS
+Bash
+
+kubectl get pods
+kubectl get nodes
+kubectl get svc
+kubectl get deployments
+
+kubectl describe pod pod-name
+kubectl logs pod-name
+
+kubectl apply -f file.yml
+kubectl delete -f file.yml
+
+kubectl scale deployment app --replicas=5
+
+kubectl rollout status deployment app
+kubectl rollout undo deployment app
