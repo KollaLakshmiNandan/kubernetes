@@ -5,7 +5,7 @@ metadata:
   name: nginx-deployment
 
 spec:
-  replicas: 6
+  replicas: 7
 
   selector:
     matchLabels:
@@ -18,7 +18,7 @@ spec:
 
     spec:
       containers:
-      - name: nginx
-        image: nginx:invalid
-        ports:
-        - containerPort: 80
+        - name: nginx
+          image: nginx:invalid
+          ports:
+            - containerPort: 80
