@@ -6,11 +6,9 @@ metadata:
 
 spec:
   replicas: 5
-
   selector:
     matchLabels:
       app: nginx
-
   template:
     metadata:
       labels:
